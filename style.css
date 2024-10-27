@@ -70,14 +70,17 @@ button {
   background-color: #dc3545;
   color: white;
 }
-ul {
+.Zadania ul {
   list-style: none;
   padding: 0;
 }
-li {
+.Zadania li {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 8px;
   border-bottom: 1px solid #ddd;
+}
+footer ul li {
+    list-style-type: none;
 }
