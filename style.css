@@ -11,7 +11,7 @@ header {
 }
 .Dodawanie_zadan {
     height: 80%;
-    margin-left: 200px;
+    margin-left: 300px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -83,8 +83,8 @@ button {
 }
 footer {
     width: 500px;
-    display: flex;
-    align-content: center;
+    margin-left: 280px;
+    text-align: center;
 }
 footer ul li {
     list-style-type: none;
