@@ -81,6 +81,11 @@ button {
   padding: 8px;
   border-bottom: 1px solid #ddd;
 }
+footer {
+    width: 500px;
+    display: flex;
+    align-content: center;
+}
 footer ul li {
     list-style-type: none;
 }
