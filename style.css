@@ -16,12 +16,25 @@ header {
     justify-content: flex-start;
     align-items: center;
 }
-.Zadania {
+.Aplikacja {
   background: #fff;
   padding: 20px;
   border-radius: 8px;
-  width: 300px;
+  width: 500px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.Zadania {
+    display: flex;
+    justify-content: space-between;
+}
+.Lista_zadan {
+    width: 200px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.Lista {
+    width: 600px;
+    margin-right: 200px;
 }
 h2 {
   text-align: center;

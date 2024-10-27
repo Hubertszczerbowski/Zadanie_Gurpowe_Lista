@@ -8,19 +8,45 @@
 </head>
 <body>
     <header>Lista zadań</header>
-    <div class="Dodawanie_zadan">
-        <div class="Zadania">
-            <h2>Lista zadań</h2>
-        
-            <!-- Formularz do dodawania zadania -->
-            <form method="POST" action="#" class="input-group">
-              <input type="text" name="task" placeholder="Wpisz nowe zadanie..." required>
-              <button type="submit" class="add-btn">Dodaj</button>
-            </form>
-        </div>
-    </div>
-    <div class="Lista_zadan">
+    <div class="Zadania">
+        <div class="Dodawanie_zadan">
+            <div class="Aplikacja">
+                <h2>Lista zadań</h2>
+            
+                <!-- Formularz do dodawania zadania -->
+                <form method="POST" action="#" class="input-group">
+                  <input type="text" name="task" placeholder="Wpisz nowe zadanie..." required>
+                  <button type="submit" class="add-btn">Dodaj</button>
+                </form>
 
+            </div>
+        </div>
+        <div class="Lista">
+            <div class="Lista_zadan">
+                <span>Zadanie 1</span>
+                <ul>
+                    <!-- Przykładowe zadania, które można zastąpić dynamicznymi danymi z backendu -->
+                    <li>
+                        <div>
+                            <button type="submit" class="edit-btn">Edytuj</button>
+                            <button type="submit" class="delete-btn">Usuń</button>
+                        </div>
+                    </li>
+                    <!-- Dodaj więcej zadań tutaj jako <li> lub dynamicznie z backendu -->
+                </ul>
+                <span>Zadanie 1</span>
+                <ul>
+                    <!-- Przykładowe zadania, które można zastąpić dynamicznymi danymi z backendu -->
+                    <li>
+                        <div>
+                            <button type="submit" class="edit-btn">Edytuj</button>
+                            <button type="submit" class="delete-btn">Usuń</button>
+                        </div>
+                    </li>
+                    <!-- Dodaj więcej zadań tutaj jako <li> lub dynamicznie z backendu -->
+                </ul>
+            </div>
+        </div>
     </div>
 </body>
 </html>
