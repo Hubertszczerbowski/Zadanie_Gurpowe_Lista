@@ -11,7 +11,9 @@
             max-width: 600px;
             margin: auto;
             padding: 20px;
-            color: black;
+            color: rgb(58, 58, 58);
+            background-color: rgb(190, 185, 180);
+            text-align: center;
         }
 
         ul {
@@ -23,7 +25,8 @@
             display: flex;
             justify-content: space-between;
             padding: 10px;
-            border: 1px solid #ccc;
+            border: 1px solid #888;
+            background-color: #ccc;
             margin: 5px 0;
 
         }
@@ -31,23 +34,25 @@
         input[type="text"] {
             width: 70%;
             padding: 10px;
-            background-color: black;
+            background-color: white;
         }
 
         input[type="button"] {
-            background-color: black;
+            background-color: white;
         }
 
         button {
             padding: 10px;
-            color: black;
-            background-color: black;
+            margin: 10px;
+            color: rgb(185, 185, 185);
+            background-color: rgb(66, 56, 56);
         }
 
         .selected {
-            background: aqua;
+            background: #9699acde;
             width: auto;
         }
+
         .modal {
             display: none;
             position: fixed;
@@ -58,12 +63,11 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgb(0, 0, 0);
             background-color: rgba(0, 0, 0, 0.4);
         }
 
         .modal-content {
-            background-color: #fefefe;
+            background-color: #cacaca;
             margin: auto;
             padding: 20px;
             border: 1px solid #888;
@@ -81,14 +85,14 @@
     </ul>
 
     <button id="addBtn">Dodaj Zadanie</button>
-    <button id="editBtn" disabled=true>edycja zadania</button>
-    <button id="deleteBtn" disabled=true>usuń zadanie</button>
+    <button id="guzik_edytuj" disabled=true>edycja zadania</button>
+    <button id="guzik_delete" disabled=true>usuń zadanie</button>
     <div id="myModalEdit" class="modal">
         <div class="modal-content">
             Edytuj Zadanie.
             <input type="text" id="edit" placeholder="edycja zadania">
-            <input type="button" value="Zatwierdz" id="edit_ok">
-            <input type="button" value="Anuluj" id="edit_cancel">
+            <input type="button" value="Zatwierdz" id="edytuj_ok">
+            <input type="button" value="Anuluj" id="edytuj_anuluj">
         </div>
     </div>
     <div id="myModalAdd" class="modal">
@@ -102,154 +106,147 @@
 
     <script>
         var myModalEdit = document.getElementById("myModalEdit");
-var myModalAdd = document.getElementById("myModalAdd");
+        var myModalAdd = document.getElementById("myModalAdd");
 
 
-var btn_edit = document.getElementById("editBtn");
-var btn_edit_ok = document.getElementById("edit_ok");
-var btn_edit_cancel = document.getElementById("edit_cancel");
+        var edytuj_guzik = document.getElementById("guzik_edytuj");
+        var edytuj_guzik_ok = document.getElementById("edytuj_ok");
+        var edytuj_guzik_anuluj = document.getElementById("edytuj_anuluj");
 
 
-var btn_add = document.getElementById("addBtn");
-var btn_add_ok = document.getElementById("add_ok");
-var btn_add_cancel = document.getElementById("add_cancel");
+        var btn_add = document.getElementById("addBtn");
+        var btn_add_ok = document.getElementById("add_ok");
+        var btn_add_cancel = document.getElementById("add_cancel");
 
-var btn_delete = document.getElementById("deleteBtn");
+        var btn_delete = document.getElementById("guzik_delete");
 
-const taskList = document.getElementById('taskList');
+        const taskList = document.getElementById('taskList');
 
 
-function load () {
-    var add = document.getElementById("add");
-    const taskText = add.value.trim();
-    let tabl = []
-     tabl = JSON.parse(localStorage.getItem('lista'));
-     for (let elem of tabl) {
-        addTask(elem);
+        function load() {
+            var add = document.getElementById("add");
+            const taskText = add.value.trim();
+            for (let elem of tabl) {
+                addTask(elem);
 
-     }
+            }
 
-}
-function addTask(taskText) {
-    const li = document.createElement('li');
-    li.textContent = taskText;
-    taskList.appendChild(li);
-}
-
-taskList.onclick = function (event) {
-    let isSameNode = false;
-    if (event.target.tagName != "LI") return;
-    let selected = taskList.querySelectorAll('.selected');
-    for (let elem of selected) {
-        if(elem.isSameNode(event.target))
-        {
-            isSameNode = true;
         }
-    }
-    if (isSameNode) {
-        removeSelect();
-    } else {
-        singleSelect(event.target);
-    }
-
-}
-taskList.onmousedown = function () {
-    return false;
-};
-function removeSelect () {
-    let selected = taskList.querySelectorAll('.selected');
-    for (let elem of selected) {           
-        elem.classList.remove('selected');        
-    }
-    btn_delete.disabled = true;
-    btn_edit.disabled = true;
-}
-function singleSelect(li) {
-    let selected = taskList.querySelectorAll('.selected');
-    for (let elem of selected) {
-        elem.classList.remove('selected');
-    }
-    li.classList.add('selected');
-    btn_edit.disabled = false;
-    btn_delete.disabled = false;
-}
-
-function save() {
-    let savelist = [];
-    
-    let items = taskList.querySelectorAll('li');
-    for (let elem of items) {
-        savelist.push(elem.textContent);
-    }
-    localStorage.setItem('lista',JSON.stringify(savelist));
-}
-btn_add.onclick = function () {
-    myModalAdd.style.display = "block";
-}
-btn_add_ok.onclick = function () {
-    var add = document.getElementById("add");
-    const taskText = add.value.trim();
-    if (taskText) {
-        console.log('btn_add_ok_else1');
-        addTask(taskText);
-        add.value = '';
-        myModalAdd.style.display = "none";
-        save(); 
-    }
-    else {
-        alert('nie mozna dodac pustego zadania');
-    }
-
-}
-btn_add_cancel.onclick = function () {
-    myModalAdd.style.display = "none";
-}
-btn_edit.onclick = function () {
-    var edit = document.getElementById("edit");
-    let selected = taskList.querySelectorAll('.selected');
-    for (let elem of selected) {
-        edit.value = elem.textContent;
-    }
-    myModalEdit.style.display = "block";
-
-}
-
-
-btn_edit_ok.onclick = function () {
-
-    var edit = document.getElementById("edit");
-    if (edit.value) {
-        let selected = taskList.querySelectorAll('.selected');
-        for (let elem of selected) {
-            elem.textContent = edit.value;
+        function addTask(taskText) {
+            const li = document.createElement('li');
+            li.textContent = taskText;
+            taskList.appendChild(li);
         }
-        myModalEdit.style.display = "none";
-        save(); 
-        edit.value="";
-    }
-    else {
-        alert('tresc zadania nie moze byc pusta');
-    }
+
+        taskList.onclick = function (event) {
+            let isSameNode = false;
+            if (event.target.tagName != "LI") return;
+            let selected = taskList.querySelectorAll('.selected');
+            for (let elem of selected) {
+                if (elem.isSameNode(event.target)) {
+                    isSameNode = true;
+                }
+            }
+            if (isSameNode) {
+                removeSelect();
+            } else {
+                singleSelect(event.target);
+            }
+
+        }
+        function removeSelect() {
+            let selected = taskList.querySelectorAll('.selected');
+            for (let elem of selected) {
+                elem.classList.remove('selected');
+            }
+            btn_delete.disabled = true;
+            edytuj_guzik.disabled = true;
+        }
+        function singleSelect(li) {
+            let selected = taskList.querySelectorAll('.selected');
+            for (let elem of selected) {
+                elem.classList.remove('selected');
+            }
+            li.classList.add('selected');
+            edytuj_guzik.disabled = false;
+            btn_delete.disabled = false;
+        }
+
+        function save() {
+            let savelist = [];
+
+            let items = taskList.querySelectorAll('li');
+            for (let elem of items) {
+                savelist.push(elem.textContent);
+            }
+        }
+        btn_add.onclick = function () {
+            myModalAdd.style.display = "block";
+        }
+        btn_add_ok.onclick = function () {
+            var add = document.getElementById("add");
+            const taskText = add.value.trim();
+            if (taskText) {
+                console.log('btn_add_ok_else1');
+                addTask(taskText);
+                add.value = '';
+                myModalAdd.style.display = "none";
+                save();
+            }
+            else {
+                alert('nie mozna dodac pustego zadania');
+            }
+
+        }
+        btn_add_cancel.onclick = function () {
+            myModalAdd.style.display = "none";
+        }
+        edytuj_guzik.onclick = function () {
+            var edit = document.getElementById("edit");
+            let selected = taskList.querySelectorAll('.selected');
+            for (let elem of selected) {
+                edit.value = elem.textContent;
+            }
+            myModalEdit.style.display = "block";
+
+        }
 
 
-}
+        edytuj_guzik_ok.onclick = function () {
 
-btn_edit_cancel.onclick = function () {
-    var edit = document.getElementById("edit");
-    myModalEdit.style.display = "none";
-    edit.value="";
-}
-btn_delete.onclick = function () {
-    let selected = taskList.querySelectorAll('.selected');
+            var edit = document.getElementById("edit");
+            if (edit.value) {
+                let selected = taskList.querySelectorAll('.selected');
+                for (let elem of selected) {
+                    elem.textContent = edit.value;
+                }
+                myModalEdit.style.display = "none";
+                save();
+                edit.value = "";
+            }
+            else {
+                alert('tresc zadania nie moze byc pusta');
+            }
 
-    for (let elem of selected) {
-        taskList.removeChild(elem);
-    }
-    btn_delete.disabled = true;
-    btn_edit.disabled = true;
-    save(); 
-}
-load();
+
+        }
+
+        edytuj_guzik_anuluj.onclick = function () {
+            var edit = document.getElementById("edit");
+            myModalEdit.style.display = "none";
+            edit.value = "";
+        }
+        btn_delete.onclick = function () {
+            let selected = taskList.querySelectorAll('.selected');
+
+            for (let elem of selected) {
+                taskList.removeChild(elem);
+            }
+            btn_delete.disabled = true;
+            edytuj_guzik.disabled = true;
+            save();
+        }
+        load();
     </script>
 </body>
 
